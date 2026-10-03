@@ -1,25 +1,4 @@
 -- ========================================================
--- 1. MEJORA MECÁNICA: FIJAR DISTANCIA DE PARRY A 25
--- ========================================================
-getgenv().RiseDistance = 25
-getgenv().ParryRange = 25
-
-task.spawn(function()
-    while task.wait() do 
-        pcall(function()
-            if getgenv().RiseConfig then
-                getgenv().RiseConfig.Distance = 25
-                getgenv().RiseConfig.Range = 25
-                getgenv().RiseConfig.AutoParryDistance = 25
-            end
-            if getgenv().Settings then
-                getgenv().Settings.Distance = 25
-            end
-        end)
-    end
-end)
-
--- ========================================================
 -- 2. MEJORA MECÁNICA DE PING: DETECTOR Y TELEPORT
 -- ========================================================
 local function OptimizarRegionYPing()
@@ -30,6 +9,7 @@ local function OptimizarRegionYPing()
 
     print("[Optimización] Buscando servidor con mejor ancho de banda...")
     
+    -- LÍNEA CORREGIDA ABAJO: API oficial de servidores de Roblox
     local url = "https://roblox.com" .. PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"
     local success, result = pcall(function() return game:HttpGet(url) end)
     
@@ -58,23 +38,3 @@ task.spawn(function()
         end)
     end
 end)
-
--- ========================================================
--- 3. MEJORA MECÁNICA DE RED (Anti-Lag Visual)
--- ========================================================
-task.spawn(function()
-    for _, v in pairs(game.Workspace:GetDescendants()) do
-        if v:IsA("BasePart") and not v:IsA("MeshPart") then
-            v.Material = Enum.Material.SmoothPlastic
-        end
-        if v:IsA("Decal") or v:IsA("Texture") then
-            v:Destroy()
-        end
-    end
-end)
-
--- ========================================================
--- 4. CARGA DEL SCRIPT ORIGINAL PROTEGIDO DE RISE
--- ========================================================
-print("Inyectando puente mecánico. Cargando Rise original...")
-loadstring(game:HttpGet("https://raw.githubusercontent.com/joshhhie/rise/refs/heads/main/loader.lua"))()
